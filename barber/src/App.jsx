@@ -1,10 +1,14 @@
-import React, { useRef,useState,useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { OrbitControls, Clone, Cylinder } from "@react-three/drei";
+import { OrbitControls} from "@react-three/drei";
 import barberChair from "./barberChair.glb";
-import { useGLTF, useHelper } from "@react-three/drei";
+import { useGLTF, useHelper, Html, Sparkles } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { BoxBufferGeometry, MeshBasicMaterial, Mesh, CylinderGeometry } from 'three';
+import {
+  MeshBasicMaterial,
+  SphereGeometry,
+} from "three";
+
 
 function Lights() {
   return (
@@ -15,52 +19,71 @@ function Lights() {
   );
 }
 
+
+const timing = new THREE.Clock();
+
 const color = {
-  blue: new THREE.Color("blue"),
+  blue: new THREE.Color("#89CFF0"),
   white: new THREE.Color("white"),
-  red:  new THREE.Color("red")
+  red: new THREE.Color("red"),
+};
 
+function middleLayer() {
+  const boxRef = useRef();
 
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    boxRef.current.rotation.x += Math.cos(time) * 0.02;
+  });
+
+  const geometry = new SphereGeometry(30, 32, 16);
+  const material = new MeshBasicMaterial({
+    color: color.blue,
+    wireframe: true,
+  });
+  const cube = (
+    <mesh
+      ref={boxRef}
+      geometry={geometry}
+      material={material}
+      position={[0, 0, 0]}
+    />
+  );
+
+  return cube;
 }
-console.log(color)
 
-
-function generateCubes(numCubes) {
-  const cubes = [];
-  for (let i = 0; i < numCubes; i++) {
-
-    const boxRef = useRef();
-
-    // useFrame(() => {
-    //   boxRef.current.rotation.y += (Math.random() - 1.5) * 0.01
-    // });
-  
-    const geometry = new CylinderGeometry(2, 2, 2);
-    const material = new MeshBasicMaterial({ color: 0xff0000 });
-    const cube = <mesh ref={boxRef} key={i} geometry={geometry} material={material} position={[(Math.random() - 0.5) * 30, (Math.random() - 0.5) * 20, -5]} />;
-    cubes.push(cube);
-  }
-  
-
-  return cubes;
-}
-
-
-function Model() {
+function Model(props) {
+  const startTimeRef = useRef(performance.now());
   const model = useGLTF(barberChair);
-  return <>
-  
-  <Clone object={ model.scene } scale={ 4 } position={ [-4,4,0] } />
-  <Clone object={ model.scene } scale={ 4 } position={ [0,0,0]} />
-  <Clone object={ model.scene } scale={ 4 } position={ [4,-8,0]} />
-</>
+  const chairOne = useRef();
+  useFrame(({ mouse, viewport}) => {
+    const time = performance.now()- startTimeRef.current;
+    const x = (chairOne.current.rotation.x = (mouse.x * viewport.width) / 5);
+    const y = (chairOne.current.rotation.y = (mouse.x * viewport.height) / 5);
+    chairOne.current.lookAt(x, y, 1);
+
+  });
+
+  return (
+    <>
+      <primitive
+        ref={chairOne}
+        object={model.scene}
+        scale={3}
+        position={[0, 0, 0]}
+      />
+
+      {/* <Clone object={ model.scene } scale={ 3 } position={ [0,0,0]} />
+  <Clone object={ model.scene } scale={ 3 } position={ [4,-8,0]} /> */}
+    </>
+  );
 }
 
 
 
 function App() {
-  const cubes = generateCubes(30);
-  
+  const cubes = middleLayer(10);
 
   return (
     <>
@@ -68,12 +91,17 @@ function App() {
         <meshBasicMaterial attach="material" color={"red"} />
         <boxGeometry attach="geometry" />
       </mesh> */}
+
       <Model />
+      <Sparkles size={10}     scale={ [ 20, 10, 20 ] }   color={"#FFFFE0"}/>
       {cubes}
 
       <Lights />
 
-      <OrbitControls />
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+      />
     </>
   );
 }

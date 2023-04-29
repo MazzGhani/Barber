@@ -5,12 +5,14 @@ import './index.css'
 import { Canvas } from '@react-three/fiber'
 import Navbar from './Navbar'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* <Header/> */}
     <Navbar/>
     <div style={{width:"100%",height:"50vh" }}>
-    <Canvas flat linear style={{backgroundColor:"white"}}>
+    <Canvas flat linear style={{backgroundColor:"#CBC3E3"}}>
+
 
     <App />
 
