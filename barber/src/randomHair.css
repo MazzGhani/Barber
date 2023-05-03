@@ -1,0 +1,10 @@
+.cardBorder:hover{
+    border-style: solid;
+
+    border-width: 5px;
+  
+    border-image: linear-gradient(green, yellow,orange,blue,indigo,violet) 2;
+    
+
+
+}
