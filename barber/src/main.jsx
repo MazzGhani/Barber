@@ -16,7 +16,7 @@ import {
 import { OrbitControls } from "@react-three/drei";
 import Button from "react-bootstrap/esm/Button";
 import Backround from "./Backround";
-import Card  from "react-bootstrap/Card"
+import Modal from 'react-bootstrap/Modal';
 import Board from "./Board";
 
 function Lights() {
@@ -117,12 +117,29 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               What We Can Do
             </h1>
             <div
+            className="infoBubble"
              style={{
               position: "absolute",
               top: `230vh`,
               right: "40vw", 
               color: "black",
+              display:"none",
+              backgroundColor:"transparent"
             }}>
+
+              <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Barber</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <p>Modal body text goes here.</p>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=>{document.getElementsByClassName("infoBubble")[0].style.display="none"}}>Close</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
 
             </div>
           </Scroll>
