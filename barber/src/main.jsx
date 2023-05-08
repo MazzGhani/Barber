@@ -19,7 +19,20 @@ import Backround from "./Backround";
 import Modal from 'react-bootstrap/Modal';
 import Board from "./Board";
 
+
+function Camera(){
+  return(
+    <>
+            <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          enableRotate={false}
+        />
+    </>
+  )
+}
 function Lights() {
+
   return (
     <>
       <ambientLight intensity={2} />
@@ -59,18 +72,16 @@ function ImagesItems() {
   );
 }
 ReactDOM.createRoot(document.getElementById("root")).render(
+
   <React.StrictMode>
     {/* <Header/> */}
     <Navbar />
     <div style={{ width: window.innerWidth, height: window.innerHeight }}>
       <Canvas flat linear style={{ backgroundColor: "#CBC3E3" }}>
         <Lights />
+        <Camera/>
 
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-        />
+
         <ScrollControls pages={3}>
           <ImagesItems />
 
@@ -101,6 +112,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 backgroundColor: "transparent",
                 border: "1px solid white",
               }}
+
             >
               Book an Appointment
             </Button>
@@ -115,6 +127,17 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               }}
             >
               What We Can Do
+            </h1>
+            <h1
+              style={{
+                position: "absolute",
+                top: `250vh`,
+                right: "10vw",
+                fontSize: "2rem",
+                color: "white",
+              }}
+            >
+              Hover Over The Objects !
             </h1>
             <div
             className="infoBubble"

@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
     "@react-spring/three": "^9.7.2",
@@ -20,7 +21,8 @@
     "react-bootstrap": "^2.7.4",
     "react-curved-text": "^2.0.2",
     "react-dom": "^18.2.0",
-    "three": "^0.152.2"
+    "three": "^0.152.2",
+    "vercel": "^29.1.1"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.6",
