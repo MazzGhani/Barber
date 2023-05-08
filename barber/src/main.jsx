@@ -27,6 +27,8 @@ function Camera(){
           enableZoom={false}
           enablePan={false}
           enableRotate={false}
+          enableTouchScroll={true}
+          touches={true}
         />
     </>
   )
@@ -79,7 +81,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <div style={{ width: window.innerWidth, height: window.innerHeight }}>
       <Canvas flat linear style={{ backgroundColor: "#CBC3E3" }}>
         <Lights />
-        <Camera/>
+        {/* <Camera/> */}
 
 
         <ScrollControls pages={3}>
