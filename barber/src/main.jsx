@@ -20,19 +20,7 @@ import Modal from 'react-bootstrap/Modal';
 import Board from "./Board";
 
 
-function Camera(){
-  return(
-    <>
-            <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-          enableTouchScroll={true}
-          touches={true}
-        />
-    </>
-  )
-}
+
 function Lights() {
 
   return (
@@ -70,6 +58,21 @@ function ImagesItems() {
         scale={[w / 5, w / 5, 1]}
         position={[-w / 6, -5, 0]}
       />
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / 6, -8, -2]}
+      />
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / -5, -8, 0]}
+      />
+            <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / -5, -5, -1]}
+      />
     </Scroll>
   );
 }
@@ -100,6 +103,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 right: "40vw",
                 fontSize: "5rem",
                 color: "white",
+                fontFamily:"'Abril Fatface', cursive"
               }}
             >
               Come Take A Seat
@@ -110,10 +114,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 position: "absolute",
                 top: `90vh`,
                 right: "35vw",
-                fontSize: "30px",
-                backgroundColor: "transparent",
+                fontSize: "16px",
+                backgroundColor: "black",
                 border: "1px solid white",
+                fontFamily:"'Abril Fatface', cursive"
+
               }}
+              className="mx-auto"
 
             >
               Book an Appointment
@@ -126,6 +133,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 right: "40vw",
                 fontSize: "5rem",
                 color: "white",
+                fontFamily:"'Abril Fatface', cursive"
+
               }}
             >
               What We Can Do
@@ -133,13 +142,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <h1
               style={{
                 position: "absolute",
-                top: `250vh`,
+                top: `230vh`,
                 right: "10vw",
                 fontSize: "2rem",
                 color: "white",
+                fontFamily:"'Abril Fatface', cursive"
+
               }}
             >
-              Hover Over The Objects !
+              Hover Over or Click the Objects !
             </h1>
             <div
             className="infoBubble"
@@ -149,7 +160,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               right: "40vw", 
               color: "black",
               display:"none",
-              backgroundColor:"transparent"
+              backgroundColor:"transparent",
+              fontFamily:"'Abril Fatface', cursive"
+
             }}>
 
               <Modal.Dialog>

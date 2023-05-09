@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 import board from "./board.glb";
 import trimmer from "./trimmer.glb";
-import { useGLTF, Sparkles, Html } from "@react-three/drei";
+import scissor from "./scissors.glb";
+import { useGLTF, Sparkles, Html,OrbitControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three"
+
 
 
 function Model(props) {
@@ -34,35 +36,36 @@ function Model(props) {
 }
 
 function Trimmer(props) {
-  const [hovered, setHovered] = useState(false);
-  const startTimeRef = useRef(performance.now());
   const trimmerRef = useRef();
   const model = useGLTF(trimmer);
-  const time = performance.now() - startTimeRef.current;
-
-
-  useFrame(({ mouse, viewport }) => {
-    const { x, y } = mouse;
-    const box = new THREE.Box3().setFromObject(trimmerRef.current);
-    const isHovered = box.containsPoint(new THREE.Vector3(x, y, 0));
-
-    if (isHovered !== hovered) {
-      setHovered(isHovered);
-      document.getElementsByClassName("infoBubble")[0].style.display=""
-    }
-
-
-  });
 
   return (
     <>
       <mesh
         ref={trimmerRef}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
         scale={0.02}
-        position={[-1.01, -16, 0.4]}
+        position={[-1.01, -16, -0.6]}
         rotation={[1,0,0]}
+      >
+        <primitive object={model.scene} />
+
+      </mesh>
+    </>
+  );
+}
+function Scissors(props) {
+  const scissorRef = useRef();
+  const model = useGLTF(scissor);
+
+  return (
+
+    <>
+      <mesh
+        ref={scissorRef}
+        scale={0.5}
+        position={[-3.8, -17, -3.7]}
+        rotation={[0.7,-0.42,-0.3]}
+
       >
         <primitive object={model.scene} />
 
@@ -72,10 +75,34 @@ function Trimmer(props) {
 }
 
 function Board() {
+  const fullBoard= useRef();
+
+  const [hovered, setHovered] = useState(false);
+
+  useFrame(({ mouse, viewport }) => {
+    const { x, y } = mouse;
+    const box = new THREE.Box3().setFromObject(fullBoard.current);
+    const isHovered = box.containsPoint(new THREE.Vector3(x, y, 0));
+
+    if (isHovered !== hovered) {
+      setHovered(isHovered);
+      document.getElementsByClassName("infoBubble")[0].style.display=""
+    }
+
+
+  });
   return (
     <>
+    {/* <OrbitControls/> */}
+    <group ref={fullBoard} onClick={()=>{      document.getElementsByClassName("infoBubble")[0].style.display=""
+}}>
       <Model />
       <Trimmer />
+      <Scissors />
+
+    </group>
+    
+
     </>
   );
 }
