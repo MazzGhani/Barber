@@ -1,8 +1,15 @@
 import React, { useRef, useState } from "react";
 import barberChair from "./barberChair.glb";
 import { useGLTF, Sparkles, Html } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import board from "./board.glb";
+import { useFrame , Canvas, useThree} from "@react-three/fiber";
+import { Scroll, Image, ScrollControls } from "@react-three/drei";
+import Button from "react-bootstrap/esm/Button";
+import Backround from "./Backround";
+import Modal from "react-bootstrap/Modal";
+import Board from "./Board";
+import img1 from "./assets/instagram.jpeg";
+
+
 
 function Model() {
   const startTimeRef = useRef(performance.now());
@@ -23,46 +30,186 @@ function Model() {
     </>
   );
 }
-function Model2() {
-  const model2 = useGLTF(board);
-  const apple = useRef();
-  model2.name = "Model2";
 
+function Lights() {
   return (
     <>
-      <group ref={apple}>
-        <primitive object={model2.scene} scale={3} position={[0, 0, 0]} />
-      </group>
+      <ambientLight intensity={2} />
+      <spotLight color={"white"} intensity={3} position={[10, 15, 10]} />
     </>
   );
 }
 
-function App() {
-  const [currentModel, setCurrentModel] = useState("Model1");
-  function changeModel() {
-    if (currentModel === "Model2") {
-      setCurrentModel("Model1");
-    }
-    if (currentModel === "Model1") {
-      setCurrentModel("Model2");
-    }
-  }
+function ImageItem({ url, scale, ...props }) {
+  return (
+    <group {...props}>
+      <Image scale={scale} url={url} />
+    </group>
+  );
+}
 
-  var listOfModels = {
-    Model1: <Model />,
-    Model2: <Model2 />,
-  };
+function ImagesItems() {
+  const { width: w, height: h } = useThree((state) => state.viewport);
+  return (
+    <Scroll>
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / 6, -5, 0]}
+      />
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / -6, -7, -4]}
+      />
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / 6, -5, 0]}
+      />
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / 6, -8, -2]}
+      />
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / -5, -8, 0]}
+      />
+      <ImageItem
+        url={img1}
+        scale={[w / 5, w / 5, 1]}
+        position={[-w / -5, -5, -1]}
+      />
+    </Scroll>
+  );
+}
+
+
+
+function App() {
+
 
   return (
     <>
+
+<div style={{ width: window.innerWidth, height: window.innerHeight }}>
+      <Canvas flat linear style={{ backgroundColor: "#CBC3E3" }}>
+
+        <Lights />
+
+        <ScrollControls pages={3}>
+          <ImagesItems />
+
+          <Scroll>
+          <Sparkles size={10} scale={[20, 10, 20]} color={"#FFFFE0"} />
+        <Model/>
+            <Backround />
+            <Board />
+          </Scroll>
+          <Scroll html style={{ width: "100%" }}>
+            <h1
+              style={{
+                position: "absolute",
+                top: `20vh`,
+                right: "40vw",
+                fontSize: "5rem",
+                color: "white",
+                fontFamily: "'Abril Fatface', cursive",
+              }}
+            >
+              Come Take A Seat
+            </h1>
+            <Button
+              variant="primary"
+              style={{
+                position: "absolute",
+                top: `90vh`,
+                right: "35vw",
+                fontSize: "16px",
+                backgroundColor: "black",
+                border: "1px solid white",
+                fontFamily: "'Abril Fatface', cursive",
+              }}
+              className="mx-auto"
+            >
+              Book an Appointment
+            </Button>
+
+            <h1
+              style={{
+                position: "absolute",
+                top: `190vh`,
+                right: "40vw",
+                fontSize: "5rem",
+                color: "white",
+                fontFamily: "'Abril Fatface', cursive",
+              }}
+            >
+              What We Can Do
+            </h1>
+            <h1
+              style={{
+                position: "absolute",
+                top: `230vh`,
+                right: "10vw",
+                fontSize: "2rem",
+                color: "white",
+                fontFamily: "'Abril Fatface', cursive",
+              }}
+            >
+              Hover Over or Click the Objects !
+            </h1>
+            <div
+              className="infoBubble"
+              style={{
+                position: "absolute",
+                top: `230vh`,
+                right: "40vw",
+                color: "black",
+                display: "none",
+                backgroundColor: "transparent",
+                fontFamily: "'Abril Fatface', cursive",
+              }}
+            >
+              <Modal.Dialog>
+                <Modal.Header>
+                  <Modal.Title>Barber</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                  <p>Modal body text goes here.</p>
+                </Modal.Body>
+
+                <Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      document.getElementsByClassName(
+                        "infoBubble"
+                      )[0].style.display = "none";
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal.Dialog>
+            </div>
+          </Scroll>
+
+          {/* <List /> */}
+        </ScrollControls>
+      </Canvas>
+    </div>
       {/* {listOfModels[currentModel]}
 
       <Html>
         <button id="mainButton" onClick={changeModel}>change model</button>
       </Html> */}
-      <Model />
+      {/* <Model />
 
-      <Sparkles size={10} scale={[20, 10, 20]} color={"#FFFFE0"} />
+      <Sparkles size={10} scale={[20, 10, 20]} color={"#FFFFE0"} /> */}
     </>
   );
 }
