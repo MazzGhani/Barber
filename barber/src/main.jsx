@@ -16,13 +16,11 @@ import {
 import { OrbitControls } from "@react-three/drei";
 import Button from "react-bootstrap/esm/Button";
 import Backround from "./Backround";
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-bootstrap/Modal";
 import Board from "./Board";
-
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function Lights() {
-
   return (
     <>
       <ambientLight intensity={2} />
@@ -68,7 +66,7 @@ function ImagesItems() {
         scale={[w / 5, w / 5, 1]}
         position={[-w / -5, -8, 0]}
       />
-            <ImageItem
+      <ImageItem
         url={img1}
         scale={[w / 5, w / 5, 1]}
         position={[-w / -5, -5, -1]}
@@ -77,15 +75,28 @@ function ImagesItems() {
   );
 }
 ReactDOM.createRoot(document.getElementById("root")).render(
-
   <React.StrictMode>
     {/* <Header/> */}
     <Navbar />
+
+ 
+
     <div style={{ width: window.innerWidth, height: window.innerHeight }}>
       <Canvas flat linear style={{ backgroundColor: "#CBC3E3" }}>
+
+      <BrowserRouter>
+      <Routes>
+        <Route path="/barber" element={<App />}></Route>
+        <Route path="/artist" element={<App />}></Route>
+        <Route path="/teacher" element={<App />}></Route>
+        <Route path="/contact" element={<App />}></Route>
+
+
+
+      </Routes>
+    </BrowserRouter>
         <Lights />
         {/* <Camera/> */}
-
 
         <ScrollControls pages={3}>
           <ImagesItems />
@@ -93,7 +104,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Scroll>
             <App />
             <Backround />
-            <Board/>
+            <Board />
           </Scroll>
           <Scroll html style={{ width: "100%" }}>
             <h1
@@ -103,7 +114,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 right: "40vw",
                 fontSize: "5rem",
                 color: "white",
-                fontFamily:"'Abril Fatface', cursive"
+                fontFamily: "'Abril Fatface', cursive",
               }}
             >
               Come Take A Seat
@@ -117,11 +128,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 fontSize: "16px",
                 backgroundColor: "black",
                 border: "1px solid white",
-                fontFamily:"'Abril Fatface', cursive"
-
+                fontFamily: "'Abril Fatface', cursive",
               }}
               className="mx-auto"
-
             >
               Book an Appointment
             </Button>
@@ -133,8 +142,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 right: "40vw",
                 fontSize: "5rem",
                 color: "white",
-                fontFamily:"'Abril Fatface', cursive"
-
+                fontFamily: "'Abril Fatface', cursive",
               }}
             >
               What We Can Do
@@ -146,39 +154,45 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 right: "10vw",
                 fontSize: "2rem",
                 color: "white",
-                fontFamily:"'Abril Fatface', cursive"
-
+                fontFamily: "'Abril Fatface', cursive",
               }}
             >
               Hover Over or Click the Objects !
             </h1>
             <div
-            className="infoBubble"
-             style={{
-              position: "absolute",
-              top: `230vh`,
-              right: "40vw", 
-              color: "black",
-              display:"none",
-              backgroundColor:"transparent",
-              fontFamily:"'Abril Fatface', cursive"
-
-            }}>
-
+              className="infoBubble"
+              style={{
+                position: "absolute",
+                top: `230vh`,
+                right: "40vw",
+                color: "black",
+                display: "none",
+                backgroundColor: "transparent",
+                fontFamily: "'Abril Fatface', cursive",
+              }}
+            >
               <Modal.Dialog>
-        <Modal.Header>
-          <Modal.Title>Barber</Modal.Title>
-        </Modal.Header>
+                <Modal.Header>
+                  <Modal.Title>Barber</Modal.Title>
+                </Modal.Header>
 
-        <Modal.Body>
-          <p>Modal body text goes here.</p>
-        </Modal.Body>
+                <Modal.Body>
+                  <p>Modal body text goes here.</p>
+                </Modal.Body>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={()=>{document.getElementsByClassName("infoBubble")[0].style.display="none"}}>Close</Button>
-        </Modal.Footer>
-      </Modal.Dialog>
-
+                <Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      document.getElementsByClassName(
+                        "infoBubble"
+                      )[0].style.display = "none";
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal.Dialog>
             </div>
           </Scroll>
 

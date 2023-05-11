@@ -35,6 +35,7 @@ function Model(props) {
   );
 }
 
+
 function Trimmer(props) {
   const trimmerRef = useRef();
   const model = useGLTF(trimmer);
