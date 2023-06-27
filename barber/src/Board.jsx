@@ -87,7 +87,6 @@ function Board() {
 
     if (isHovered !== hovered) {
       setHovered(isHovered);
-      document.getElementsByClassName("infoBubble")[0].style.display=""
     }
 
 
@@ -95,8 +94,7 @@ function Board() {
   return (
     <>
     {/* <OrbitControls/> */}
-    <group ref={fullBoard} onClick={()=>{      document.getElementsByClassName("infoBubble")[0].style.display=""
-}}>
+    <group ref={fullBoard}>
       <Model />
       <Trimmer />
       <Scissors />

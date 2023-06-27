@@ -1,16 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import barberChair from "./barberChair.glb";
 import { useGLTF, Sparkles, Html } from "@react-three/drei";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
 import { Scroll, Image, ScrollControls } from "@react-three/drei";
 import Button from "react-bootstrap/esm/Button";
 import Backround from "./Backround";
-import Modal from "react-bootstrap/Modal";
 import Board from "./Board";
 import img1 from "./assets/instagram.jpeg";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Stack from "react-bootstrap/Stack";
+
+import ModelView from "./ModelView";
+import { BsFillCaretDownFill, BsFillCaretRightFill } from "react-icons/bs";
 
 function Model() {
   const startTimeRef = useRef(performance.now());
@@ -51,11 +50,12 @@ function ImageItem({ url, scale, ...props }) {
 
 function ImagesItems() {
   const { width: w, height: h } = useThree((state) => state.viewport);
+
   return (
     <Scroll>
       <ImageItem
         url={img1}
-        scale={[w / 5, w / 5, 1]} // replaced with width and height in css 
+        scale={[w / 5, w / 5, 1]}
         position={[-w / 6, -5, 0]}
       />
       <ImageItem
@@ -63,31 +63,16 @@ function ImagesItems() {
         scale={[w / 5, w / 5, 1]}
         position={[-w / -6, -7, -4]}
       />
-      <ImageItem
-        url={img1}
-        scale={[w / 5, w / 5, 1]}
-        position={[-w / 6, -5, 0]}
-      />
-      <ImageItem
-        url={img1}
-        scale={[w / 5, w / 5, 1]}
-        position={[-w / 6, -8, -2]}
-      />
-      <ImageItem
-        url={img1}
-        scale={[w / 5, w / 5, 1]}
-        position={[-w / -5, -8, 0]}
-      />
-      <ImageItem
-        url={img1}
-        scale={[w / 5, w / 5, 1]}
-        position={[-w / -5, -5, -1]}
-      />
     </Scroll>
   );
 }
 
 function App() {
+  const [toggle, setToggle] = useState(false);
+  
+
+
+
   return (
     <>
       <div style={{ width: window.innerWidth, height: window.innerHeight }}>
@@ -96,19 +81,22 @@ function App() {
 
           <ScrollControls pages={3}>
             <ImagesItems />
+      
 
             <Scroll>
               <Sparkles size={10} scale={[20, 10, 20]} color={"#FFFFE0"} />
               <Model />
               <Backround />
-              <Board />
+              {/* <Board /> */}
             </Scroll>
+
             <Scroll html style={{ width: "100%" }}>
               <h1
                 style={{
                   position: "absolute",
                   top: `20vh`,
-                  right: "40vw",
+                  right: "0",
+                  left: "0",
                   fontSize: "5rem",
                   color: "white",
                   fontFamily: "'Abril Fatface', cursive",
@@ -121,29 +109,60 @@ function App() {
                 style={{
                   position: "absolute",
                   top: `90vh`,
-                  right: "35vw",
-                  fontSize: "16px",
-                  backgroundColor: "black",
-                  border: "1px solid white",
+                  right: "0",
+                  left: "0",
+                  fontSize: "32px",
+                  backgroundColor: "#2C0A28",
+                  border: "1px solid #2C0A28",
+                  borderRadius: "24px",
                   fontFamily: "'Abril Fatface', cursive",
                 }}
                 className="mx-auto"
               >
-                Book an Appointment
+                Book An Appointment
               </Button>
 
               <h1
                 style={{
                   position: "absolute",
                   top: `190vh`,
-                  right: "40vw",
-                  fontSize: "5rem",
+                  right: "0",
+                  left: "0",
+                  fontSize: "4rem",
                   color: "white",
                   fontFamily: "'Abril Fatface', cursive",
                 }}
               >
                 What We Can Do
+                <Button
+                  id="button"
+                  onClick={() => {
+                    setToggle(!toggle);
+                    // changeText();
+                  }}
+                  style={{
+                    fontSize: "3rem",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    color: "black",
+                  }}
+                >
+                  {" "}
+                  {toggle ? (
+                    <Fragment>
+                      {" "}
+                      <BsFillCaretDownFill />
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      {" "}
+                      <BsFillCaretRightFill />
+                    </Fragment>
+                  )}{" "}
+                </Button>
+                {toggle ? <ModelView /> : ``}
               </h1>
+
               <h1
                 style={{
                   position: "absolute",
@@ -153,9 +172,7 @@ function App() {
                   color: "white",
                   fontFamily: "'Abril Fatface', cursive",
                 }}
-              >
-                {/* Hover Over or Click the Objects ! */}
-              </h1>
+              ></h1>
               <div
                 className="infoBubble"
                 style={{
@@ -167,64 +184,13 @@ function App() {
                   backgroundColor: "transparent",
                   fontFamily: "'Abril Fatface', cursive",
                 }}
-              >
-                <Modal.Dialog>
-                  <Modal.Header>
-                    <Modal.Title>What We Can Do</Modal.Title>
-                  </Modal.Header>
-
-                  <Modal.Body>
-                    <Tabs
-                      defaultActiveKey="profile"
-                      id="uncontrolled-tab-example"
-                      className="mb-3"
-                    >
-                      <Tab eventKey="beard" title="Beard">
-                        <Stack>
-                          <div>First item</div>
-                        </Stack>
-                      </Tab>
-                      <Tab eventKey="cut" title="Cut">
-                        <Stack>
-                          <div>First item</div>
-                        </Stack>{" "}
-                      </Tab>
-                      <Tab eventKey="other" title="Other">
-                        <Stack>
-                          <div>First item</div>
-                        </Stack>{" "}
-                      </Tab>
-                    </Tabs>
-                  </Modal.Body>
-
-                  <Modal.Footer>
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        document.getElementsByClassName(
-                          "infoBubble"
-                        )[0].style.display = "none";
-                      }}
-                    >
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal.Dialog>
-              </div>
+              ></div>
             </Scroll>
 
             {/* <List /> */}
           </ScrollControls>
         </Canvas>
       </div>
-      {/* {listOfModels[currentModel]}
-
-      <Html>
-        <button id="mainButton" onClick={changeModel}>change model</button>
-      </Html> */}
-      {/* <Model />
-
-      <Sparkles size={10} scale={[20, 10, 20]} color={"#FFFFE0"} /> */}
     </>
   );
 }

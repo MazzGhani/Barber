@@ -47,7 +47,7 @@ function onMouseMove(event) {
 }
 
 function App() {
-  const geo = Bubbles(7);
+  const geo = Bubbles(4);
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
