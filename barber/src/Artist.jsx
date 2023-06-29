@@ -4,11 +4,9 @@ import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { app, storage } from "./firebase/config.js";
 import { ref, listAll, getDownloadURL, deleteObject,getMetadata } from "firebase/storage";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { MeshDistortMaterial, GradientTexture, useCursor } from '@react-three/drei'
 
+import { MeshDistortMaterial, GradientTexture, useCursor } from '@react-three/drei'
+import {Button ,Card,Col,Row,Container,} from "react-bootstrap"
 
 function Artist() {
   var color= new THREE.Color("yellow");
@@ -106,45 +104,33 @@ function Artist() {
           <Sphere />
           {/* <OrbitControls/> */}
           <Html fullscreen>
+            <div style={{
+              textAlign:"center"
+            }}>
+              <h1
+              style={{color:"white"}}
+              >My Work</h1>
+            </div>
 
-            {imageList.map((url, idx) => {
-              return (
-                <div key={idx}>
-                  <Container
-                    fluid
-                    style={{
-                      display: "flex",
-                      margin: "0 auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Row>
-                      <Col>
-                        <img
-                          onMouseEnter={() => {
-                            changeBackround();
-                          }}
-                          onMouseLeave={() => {
-                            changeBack();
-                          }}
-                          style={{ margin: "10px", width: "300px" }}
-                          id="banana"
-                          src={url}
-                        />
-                        <button
-                          onClick={() => {
-                            deleteImage(url);
-                          }}
-                        >
-                          {" "}
-                          Delete
-                        </button>
+            
+              
+     
+                    <Row xs={1} md={3}>
+                     {imageList.map((url,idx)=>{
+                      return(
+                      <Col key={idx}>
+                      <Card>
+                        <Card.Img variant="top" src={url} alt="ee"/>
+                          <Card.Body>
+                            <Button variant="danger">Delete</Button>
+                          </Card.Body>
+                      </Card>
                       </Col>
+                      )
+                     })}
                     </Row>
-                  </Container>
-                </div>
-              );
-            })}
+              
+            
           </Html>
         </Canvas>
       </div>
@@ -153,3 +139,23 @@ function Artist() {
 }
 
 export default Artist;
+
+{/* <img
+  onMouseEnter={() => {
+    changeBackround();
+  }}
+  onMouseLeave={() => {
+    changeBack();
+  }}
+  style={{ margin: "10px", width: "300px" }}
+  id="banana"
+  src={url}
+/>
+<button
+  onClick={() => {
+    deleteImage(url);
+  }}
+>
+  {" "}
+  Delete
+</button> */}
